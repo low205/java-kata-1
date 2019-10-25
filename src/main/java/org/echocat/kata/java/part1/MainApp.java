@@ -1,14 +1,9 @@
 package org.echocat.kata.java.part1;
 
-@SuppressWarnings("UseOfSystemOutOrSystemErr")
+import org.springframework.boot.SpringApplication;
+
 public class MainApp {
-
     public static void main(String[] args) {
-        System.out.println(getHelloWorldText());
+        SpringApplication.run(BootApplication.class, args);
     }
-
-    protected static String getHelloWorldText() {
-        return "Hello world!";
-    }
-
 }

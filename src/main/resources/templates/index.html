@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Library</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+<form action="#" th:action="@{/}">
+    <p><input type="submit" value="Home"/></p>
+</form>
+<a th:href="@{/publications/download}"><span>Download publications</span></a>
+<h1>Find by ISBN</h1>
+<form action="#" th:action="@{/}">
+    <p>ISBN: <input th:name="isbn" type="text"/></p>
+    <p><input type="submit" value="Submit"/></p>
+</form>
+<br>
+<h1>Find by Author email</h1>
+<form action="#" th:action="@{/}">
+    <p>Author's email: <input th:name="authorEmail" type="text"/></p>
+    <p><input type="submit" value="Submit"/></p>
+</form>
+<br>
+<h1>Add Book</h1>
+<form action="#" method="post" th:action="@{/books}" th:object="${createBookRequest}">
+    <p>Title: <input th:name="title" type="text"/></p>
+    <p>Isbn: <input th:name="isbn" type="text"/></p>
+    <p>Authors: <input th:name="authorsEmail" type="text"/></p>
+    <p>Description: <input th:name="description" type="text"/></p>
+    <p><input type="submit" value="Submit"/></p>
+</form>
+<br>
+<h1>Add Magazine</h1>
+<form action="#" method="post" th:action="@{/magazines}" th:object="${createMagazineRequest}">
+    <p>Title: <input th:name="title" type="text"/></p>
+    <p>Isbn: <input th:name="isbn" type="text"/></p>
+    <p>Authors: <input th:name="authorsEmail" type="text"/></p>
+    <p>Published At: <input th:name="publishedAt" type="text"/></p>
+    <p><input type="submit" value="Submit"/></p>
+</form>
+<br>
+<div th:if="${errorMessage != null}">
+    <h1>Error:</h1>
+    <span th:text="${errorMessage}"> Error </span>
+</div>
+<div th:if="${publications != null}">
+    <h1>Data:</h1>
+
+    <h3>Publications:</h3>
+    <table>
+        <thead th:if="${!publications.empty}">
+        <tr>
+            <td> Publication Type</td>
+            <td> Title</td>
+            <td> ISBN</td>
+            <td> Authors</td>
+            <td> Authors Emails</td>
+            <td> Desctiption</td>
+            <td> Published At</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${publications.empty}">
+            <td colspan="2"> No Publications Found</td>
+        </tr>
+        <tr th:each="publication : ${publications}">
+            <td><span th:if="${publication instanceof T(org.echocat.kata.java.part1.domain.Book)}"
+                      th:text="Book"></span>
+                <span th:if="${publication instanceof T(org.echocat.kata.java.part1.domain.Magazine)}"
+                      th:text="Magazine"></span></td>
+            <td><span th:text="${publication.title}"></span></td>
+            <td><span th:text="${publication.isbn}"></span></td>
+            <td><span th:text="${#strings.listJoin(publication.authors.![fullName], ',')}"></span></td>
+            <td><span th:text="${#strings.listJoin(publication.authors.![email], ',')}"></span></td>
+            <td><span th:if="${publication instanceof T(org.echocat.kata.java.part1.domain.Book)}"
+                      th:text="${publication.description }"></span></td>
+            <td><span th:if="${publication instanceof T(org.echocat.kata.java.part1.domain.Magazine)}"
+                      th:text="${publication.publishedAt }"></span></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

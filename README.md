@@ -117,6 +117,9 @@ You have to implement an abstracted and simple library system.
    ```bash
    ./mvnw package exec:java -Dexec.mainClass=org.echocat.kata.java.part1.MainApp
    ```
+3. With spring boot plugin:
+
+   ``` ./mvnw spring-boot:run```
 ##### How to run your tests?
 
 1. By IDE:<br/>
